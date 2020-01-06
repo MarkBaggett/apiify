@@ -16,13 +16,35 @@ local_port: 8000
 #
 #Here is an example of a ping command
 #base_command: ping -c1
-#Optionally enable one of these to convert output to a structured response
+#Optionally along with any base command you can enable a result_regex to parse the command output
 #result_regex: (?P<bytes>\d+) bytes from (?P<hostname>\S+). icmp_seq=(?P<seq>\d+) ttl=(?P<ttl>\d+) 
 #result_regex: (?P<bytes>\d+) bytes
 #
-#Here is an example of a whois command
-base_command: whois
+#Here is an example of a whois command - Only uncomment base_command for all output or both base_comand and result_regex for structured output
+#base_command: whois
 #result_regex: Creation Date. (?P<creationdate>[\d:T -]+)
+#
+#
+#Example for traceroute to get the number of hops
+base_command: traceroute -q 1 
+result_regex: (?P<lasthops>\d+)\s+\S+\s+\((?P<hop>[\d\.]+)\).*?$
+regex_multiline: False
+regex_ignorecase: False 
+regex_dotall: False 
+#
+#
+#Example for traceroute to get all hops
+#base_command: traceroute -q 1 
+#result_regex: (\d+)\s+\S+\s+\(([\d\.]+)\).*?$
+#You have options that modify the behavior of the regex parsing.  Findall generates lists of output instead of dictionaries.
+#regex_findall: True
+#Multiline forces ^ and $ to recognize each individual line delimited by \n as separate matches. Set to True for multi line matching.
+#regex_multiline: True
+#Ignore case will ignore the case of letters when matching. Set to True to ignore case
+#regex_ignorecase: True 
+#By default the period wildcard does not match newlines. DOTALL changes that behavior. When set to True . matches \n  
+#regex_dotall: False 
+
 
 
 

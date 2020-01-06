@@ -40,13 +40,22 @@ def exec_command(arguments):
             result += err
         #print("Command output:", result.decode())
         theregex = config.get('result_regex',"")
-        #import pdb;pdb.set_trace()
         if theregex:
-            result = re.search(theregex.encode(), result, re.MULTILINE|re.IGNORECASE)
-            if result:
-                result = str(result.groupdict()).encode()
+            regex_options = 0
+            if config.get("regex_multiline"):
+                regex_options |= re.MULTILINE
+            if config.get("regex_dotall"):
+                regex_options |= re.DOTALL
+            if config.get("regex_ignorecase"):
+                regex_options |= re.IGNORECASE
+            if config.get('regex_findall'):
+                result = json.dumps( re.findall(theregex, result.decode(), regex_options)).encode()
             else:
-                result = b"No result from regex match. Command probably failed."
+                result = re.search(theregex, result.decode(), regex_options)
+                if result:
+                    result = json.dumps(result.groupdict()).encode()
+                else:
+                    result = b"No result from regex match. Command probably failed."
         #print('After regex', result)
     except Exception as e:
         return str(e).encode()
