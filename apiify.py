@@ -38,7 +38,7 @@ def exec_command(arguments):
         result = out
         if config['combine_stderr_stdout']:
             result += err
-        print("Command output:", result.decode())
+        #print("Command output:", result.decode())
         theregex = config.get('result_regex',"")
         #import pdb;pdb.set_trace()
         if theregex:
@@ -47,7 +47,7 @@ def exec_command(arguments):
                 result = str(result.groupdict()).encode()
             else:
                 result = b"No result from regex match. Command probably failed."
-        print('After regex', result)
+        #print('After regex', result)
     except Exception as e:
         return str(e).encode()
     return result
@@ -61,10 +61,14 @@ class apiify(http.server.BaseHTTPRequestHandler):
         cmd = config['base_command']
         (ignore, ignore, urlpath, urlparams, ignore) = urllib.parse.urlsplit(self.path)
         urlpath = urllib.parse.unquote_plus(urlpath)
-        if re.search("[\/?](.*)", urlpath):
+        if urlpath=="/cache":
+            self.wfile.write(exec_command.cache.cache_report().encode())
+        elif urlpath=="/stats":
+            self.wfile.write(exec_command.cache.cache_info().encode())
+        elif re.search("[\/?](.*)", urlpath):
             part = re.search("[\/?](.*)",urlpath)
             args = part.group(1)
-            print("Executing",cmd, args)
+            #print("Executing",cmd, args)
             result = exec_command(args)
             self.wfile.write(result)
         else:

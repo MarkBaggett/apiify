@@ -46,10 +46,10 @@ class ExpiringCache(collections.OrderedDict, collections.Counter):
 
     def cache_report(self):
         """Detailed info about the cache for local consumption only"""
-        rpt = "Cache Report\n{0:-^80}  {1:-^9}  {2:-^26}  {3}\n".format("DOMAIN","COUNT","EXPIRES","RECORD---->")
-        for domain,rec in sorted(self.items(),key = lambda entry:entry[1][1], reverse=True):
+        rpt = "Cache Report\n{0:-^80}  {1:-^9}  {2:-^26}  {3}\n".format("KEY","COUNT","EXPIRES","RECORD---->")
+        for thekey,rec in sorted(self.items(),key = lambda entry:entry[1][1], reverse=True):
             exp, cnt, entry = rec
-            rpt += "{0: ^80}  {1:0>9}  {2: ^20}  {3}\n".format(domain,cnt,str(exp),entry)
+            rpt += "{0: ^80}  {1:0>9}  {2: ^20}  {3}\n".format(str(thekey),str(cnt),str(exp),str(entry))
         log.info(rpt)
         return rpt
 

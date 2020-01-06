@@ -5,9 +5,16 @@ This program will execute the command specified in the YAML "base_command" and p
 
 The sample YAML configuration will who a whois query.
 
-To try it out start the server
+To try it out start the server in a separate terminal..
 $ python3 apiify.py
 
-And send it a request
+Then send it a request
 $ wget -q -O- http://127.0.0.1:8000/google.com
+
+Also check how your cache performance is going..
+$ wget -q -O- http://127.0.0.1:8000/stats
+
+Or see everything in your cache
+$ wget -q -O- http://127.0.0.1:8000/cache
+
 
