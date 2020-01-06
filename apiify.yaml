@@ -1,0 +1,29 @@
+#This is the maximum number of items to hold in the memory cache 
+cached_max_items: 65536
+#How many hours should an answer for a value be stored in cache and reused
+item_hours_in_cache: 1
+#If output contains this word (case insensitive) then do not cache it.  Blank to disable.
+no_caching_when_stderr: error
+#Combine stderr and stdout of command.  If False only stdout is parsed.
+combine_stderr_stdout: True
+#Block command injection attacks:
+block_command_injection: True
+#What IP address do you want domain stats to listen on? 0.0.0.0 means all public and private IP addresses
+local_address: 0.0.0.0
+#Which TCP port do you want the server to listen on
+local_port: 8000
+#A regular expression of Python Named capture groups that you want to extract from the output.  If none the entire command is returned
+#
+#Here is an example of a ping command
+#base_command: ping -c1
+#Optionally enable one of these to convert output to a structured response
+#result_regex: (?P<bytes>\d+) bytes from (?P<hostname>\S+). icmp_seq=(?P<seq>\d+) ttl=(?P<ttl>\d+) 
+#result_regex: (?P<bytes>\d+) bytes
+#
+#Here is an example of a whois command
+base_command: whois
+#result_regex: Creation Date. (?P<creationdate>[\d:T -]+)
+
+
+
+
