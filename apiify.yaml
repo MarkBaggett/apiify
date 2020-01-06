@@ -12,6 +12,8 @@ block_command_injection: True
 local_address: 0.0.0.0
 #Which TCP port do you want the server to listen on
 local_port: 8000
+#The file to store memory cache in
+cache_file: apiify.cache
 #A regular expression of Python Named capture groups that you want to extract from the output.  If none the entire command is returned
 #
 #Here is an example of a ping command

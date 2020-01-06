@@ -38,7 +38,6 @@ def exec_command(arguments):
         result = out
         if config['combine_stderr_stdout']:
             result += err
-        #print("Command output:", result.decode())
         theregex = config.get('result_regex',"")
         if theregex:
             regex_options = 0
@@ -56,7 +55,6 @@ def exec_command(arguments):
                     result = json.dumps(result.groupdict()).encode()
                 else:
                     result = b"No result from regex match. Command probably failed."
-        #print('After regex', result)
     except Exception as e:
         return str(e).encode()
     return result
@@ -102,6 +100,8 @@ if __name__ == "__main__":
     print('Server is Ready. http://%s:%s/arguments' % (config['local_address'], config['local_port']))
     server_thread = threading.Thread(target=server.serve_forever)
     server_thread.daemon = True
+    if pathlib.Path(config['cache_file']).exists():
+        exec_command.cache.cache_load(config['cache_file'])
     try:
         server_thread.start()
         #code.interact(local=locals())
@@ -111,4 +111,6 @@ if __name__ == "__main__":
         server.server_close()     
     print("Web API Disabled...")
     print("Control-C hit: Exiting server.  Please wait..")
+    exec_command.cache.cache_dump(config['cache_file'])
+    
     print("Bye!")
