@@ -21,12 +21,9 @@ import code
 
 config = config.config("apiify.yaml")
 cacheable = lambda _:True
-if config['no_caching_when_stderr']:
+if config.get('no_caching_when_stderr'):
     cacheable = lambda x:config['no_caching_when_stderr'].encode() not in x.lower()
 
-def dateconverter(o):
-    if isinstance(o, datetime.datetime):
-        return o.strftime("%Y-%m-%d %H:%M:%S")
 
 @expiring_cache.expiring_cache(maxsize=config['cached_max_items'], cacheable=cacheable, hours_to_live=config['item_hours_in_cache'])
 def exec_command(arguments):
