@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-#domain_stats.py by Mark Baggett
+#apiify.py by Mark Baggett
 #Twitter @MarkBaggett
 
 import logging
@@ -21,8 +21,8 @@ import code
 
 config = config.config("apiify.yaml")
 cacheable = lambda _:True
-if config.get('no_caching_when_stderr'):
-    cacheable = lambda x:config['no_caching_when_stderr'].encode() not in x.lower()
+if config.get('no_caching_this_error'):
+    cacheable = lambda x:config['no_caching_this_error'].encode() not in x.lower()
 
 
 @expiring_cache.expiring_cache(maxsize=config['cached_max_items'], cacheable=cacheable, hours_to_live=config['item_hours_in_cache'])
@@ -61,11 +61,9 @@ def exec_command(arguments):
 
 class apiify(http.server.BaseHTTPRequestHandler):
     def do_GET(self):
-        global base_command
         self.send_response(200)
         self.send_header('Content-type','text/plain')
         self.end_headers()
-        cmd = config['base_command']
         (ignore, ignore, urlpath, urlparams, ignore) = urllib.parse.urlsplit(self.path)
         urlpath = urllib.parse.unquote_plus(urlpath)
         if urlpath=="/cache":
