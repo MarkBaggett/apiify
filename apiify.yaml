@@ -14,29 +14,33 @@ local_address: 127.0.0.1
 local_port: 8000
 #The file to store memory cache in
 cache_file: apiify.cache
+#Debug Statements are enabled
+debug_statements: True
 #A regular expression of Python Named capture groups that you want to extract from the output.  If none the entire command is returned
 #
 #Here is an example of a ping command
-#base_command: ping -c1
+#base_command: ping -c1 *WEBINFO*
 #Optionally along with any base command you can enable a result_regex to parse the command output
-#result_regex: (?P<bytes>\d+) bytes from (?P<hostname>\S+). icmp_seq=(?P<seq>\d+) ttl=(?P<ttl>\d+) 
+#result_regex: (?P<bytes>\d+) bytes.*?\((?P<hostname>\S+)\):?.*?icmp_seq=(?P<seq>\d+) ttl=(?P<ttl>\d+) 
 #result_regex: (?P<bytes>\d+) bytes
 #
 #Here is an example of a whois command - Only uncomment base_command for all output or both base_comand and result_regex for structured output
-#base_command: whois
-#result_regex: Creation Date. (?P<creationdate>[\d:T -]+)
+#base_command: whois *WEBINFO*
+#result_regex: Creation Date.\s+(?P<creationdate>[\d:T -]+)
+#result_regex: (?:Creation Date.|created.)\s+(?P<creationdate>[\d:T -]+)
+
 #
 #
-#Example for traceroute to get the number of hops
-base_command: traceroute -q 1 
-result_regex: (?P<lasthops>\d+)\s+\S+\s+\((?P<hop>[\d\.]+)\).*?$
+#Example for traceroute to get the number of hops (must uncomment all regex modifiers if you use regex)
+base_command: traceroute --tcp -p 80 -n -q1 -f3 *WEBINFO*
+result_regex: (?P<lasthops>\d+)\s+(?P<hop>[\d\.]+).*?$
 regex_multiline: False
 regex_ignorecase: False 
 regex_dotall: False 
 #
 #
 #Example for traceroute to get all hops
-#base_command: traceroute -q 1 
+#base_command: traceroute --tcp -p 80 -n -q1 -f3 *WEBINFO*
 #result_regex: (\d+)\s+\S+\s+\(([\d\.]+)\).*?$
 #You have options that modify the behavior of the regex parsing.  Findall generates lists of output instead of dictionaries.
 #regex_findall: True
