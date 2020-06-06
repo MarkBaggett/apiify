@@ -26,7 +26,7 @@ Or see everything in your cache
 
 ## Configuration
 
-All configuration of this tool is done by editing apiify.yaml.  Enter the command you want to run by setting the "base_command" option in the yaml file.  In the base_command the string *WEBINFO* will be replaced by the arguments that are typed on the URL.  For example
+All configuration of this tool is done by editing apiify.yaml.  Enter the command you want to run by setting the "base_command" option in the yaml file.  In the base_command the string `*WEBINFO*` will be replaced by the arguments that are typed on the URL.  For example
 
 If base_command is set to `base_command: ping -c1 *WEBINFO*` and you visit the url `http://127.0.0.1:8000/127.0.0.1` then APIIFY will run the command `ping -c1 127.0.0.1` and return the response to the web browswer.
 
