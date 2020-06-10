@@ -51,3 +51,10 @@ regex_findall: True
 regex_multiline: True
 regex_ignorecase: True 
 regex_dotall: False 
+#
+#
+#Example of consuming web geolocation information
+#Repeated queries are cached and server is not queried
+#For wget we only want stdout (the response).  We dont want stderr so you have to turn off "combine_stderr_stdout"
+#base_command: wget -O- https://freegeoip.app/json/*WEBINFO* 2>/dev/null
+#combine_stderr_stdout: False
