@@ -58,3 +58,9 @@ regex_dotall: False
 #For wget we only want stdout (the response).  We dont want stderr so you have to turn off "combine_stderr_stdout"
 #base_command: wget -O- https://freegeoip.app/json/*WEBINFO* 2>/dev/null
 #combine_stderr_stdout: False
+#
+#
+#Example of consuming Internet Storm Center Attack statistics for an IP Address
+#This API requires that the data is an IP address not a DNS host name
+#base_command: wget -O- https://isc.sans.edu/api/ipdetails/*WEBINFO*?json 2>/dev/null
+#combine_stderr_stdout: False
