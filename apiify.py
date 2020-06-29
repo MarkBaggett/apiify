@@ -89,6 +89,9 @@ class apiify(http.server.BaseHTTPRequestHandler):
             self.wfile.write(exec_command.cache.cache_report().encode())
         elif urlpath=="/stats":
             self.wfile.write(exec_command.cache.cache_info().encode())
+        elif urlpath=="/save":
+            exec_command.cache.cache_dump(config['cache_file'])
+            self.wfile.write(b"The cache has been committed to disk.")
         elif re.search("[\/?](.*)", urlpath):
             part = re.search("[\/?](.*)",urlpath)
             args = part.group(1)
