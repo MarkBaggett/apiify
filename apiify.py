@@ -20,8 +20,13 @@ import pathlib
 import os
 import itertools
 import code
+import sys
 
-config = config.config("apiify.yaml")
+if len(sys.argv)== 1:
+    config = config.config("apiify.yaml")
+else:
+    config = config.config(sys.argv[1])
+
 cacheable = lambda _:True
 if config.get('no_caching_this_error'):
     cacheable = lambda x:config['no_caching_this_error'].encode() not in x.lower()
