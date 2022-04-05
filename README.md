@@ -1,6 +1,9 @@
 # apiify
 Wrap any binary into a cached webserver.  Intended for SEIM implementation.  Its also useful for CTF's if you want to easily stand up a server with a command injection vulnerability.  See 'block_command_injection'
 
+## Update History
+4-5-22 Added requested feature /delete/<key> to remove an item from the cache.
+
 ## Installation and Use
 
 ![alt text](./apiify.gif "Installation and use")
@@ -23,6 +26,9 @@ Also check how your cache performance is going..
 
 Or see everything in your cache
 `$ wget -q -O- http://127.0.0.1:8000/cache`
+
+Delete an entry from the cache with the same key that created it.
+`$ wget -q -O- http://127.0.0.1:8000/delete/google.com`
 
 ## Configuration
 
